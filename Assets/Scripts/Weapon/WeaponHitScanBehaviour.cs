@@ -7,6 +7,8 @@ using UnityEngine;
 public class WeaponHitScanBehaviour : MonoBehaviour
 {
 
+    [SerializeField, Tooltip("Key that fires the weapon.")]
+    private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField, Tooltip("Layers that the bullets can collide with.")]
     private LayerMask _layerMask;
 
@@ -23,8 +25,30 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Optional object to fire from, will otherwise use this object's transform.")]
     private GameObject _firePoint;
 
-    [SerializeField]
+    [SerializeField, Tooltip("Maximum distance the weapon can fire.")]
     private float _maxDistance = 10f;
+
+    [SerializeField, Tooltip("Delay between shots.")]
+    private float _fireDelay = 0.1f;
+
+    private bool canFire = true;
+    private float elapsedTime = 0f;
+    public void Update()
+    {
+        if (!canFire)
+        {
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime >= _fireDelay)
+            {
+                canFire = true;
+                elapsedTime = 0f;
+            }
+        }
+
+        if (Input.GetKeyDown(_fireKey))
+            Fire(transform.TransformDirection(Vector3.forward));
+    }
+    
 
     public Collider Fire(Vector3 direction)
     {
@@ -47,12 +71,12 @@ public class WeaponHitScanBehaviour : MonoBehaviour
 
         if (!didHit)
         {
-            Debug.DrawRay(origin, direction * _maxDistance, Color.green,5);
+            Debug.DrawRay(origin, direction * _maxDistance, Color.green, _fireDelay);
             Debug.Log("Ya missed. Try again.");
             return null;
         }
 
-        Debug.DrawRay(origin, direction * raycastHit.distance, Color.red,5);
+        Debug.DrawRay(origin, direction * raycastHit.distance, Color.red, _fireDelay);
         Debug.Log("Ya hit somethin' partner.");
 
         if (_hitSound != null)
