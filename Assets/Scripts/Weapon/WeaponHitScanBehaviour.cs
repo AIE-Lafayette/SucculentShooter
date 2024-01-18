@@ -31,8 +31,15 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Delay between shots.")]
     private float _fireDelay = 0.1f;
 
+    // initialize canfire as true, will be set to false with delay.
     private bool canFire = true;
+
+    // time that passes between shots. 
     private float elapsedTime = 0f;
+
+    /// <summary>
+    /// Takes care of input and delay for firing the weapons.
+    /// </summary>
     public void Update()
     {
         if (!canFire)
@@ -50,6 +57,11 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     }
     
 
+    /// <summary>
+    /// Fires the weapon.
+    /// </summary>
+    /// <param name="direction">The direction to send the ray in.</param>
+    /// <returns>The collider hit by the ray, if any.</returns>
     public Collider Fire(Vector3 direction)
     {
         Vector3 origin = transform.position;
