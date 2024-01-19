@@ -106,7 +106,7 @@ public class ObjectPoolBehaviour : MonoBehaviour
         GameObject obj = Instantiate(objectReference);
         obj.name = objectReference.name;
 
-        Pool pool = new Pool(gameObject);
+        Pool pool = new Pool(obj);
         _objectPools.Add(pool);
 
         return obj;
@@ -117,7 +117,7 @@ public class ObjectPoolBehaviour : MonoBehaviour
         GameObject obj = Instantiate(objectReference, position, rotation);
         obj.name = objectReference.name;
 
-        Pool pool = new Pool(gameObject);
+        Pool pool = new Pool(obj);
         _objectPools.Add(pool);
 
         return obj;

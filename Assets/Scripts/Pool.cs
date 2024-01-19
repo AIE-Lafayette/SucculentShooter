@@ -10,8 +10,9 @@ public class Pool
     private string _name;
     private List<GameObject> _objects;
 
-    public string Name;
     public int Count { get { return _objects.Count; } }
+
+    public string Name { get => _name; private set => _name = value; }
 
     /// <summary>
     /// Initializes the list and sets the name to be the game object's name.
@@ -20,7 +21,7 @@ public class Pool
     public Pool(GameObject gameObject)
     {
         _objects = new List<GameObject>();
-        _name = gameObject.name;
+        Name = gameObject.name;
 
     }
 
