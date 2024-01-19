@@ -31,6 +31,9 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Delay between shots.")]
     private float _fireDelay = 0.1f;
 
+    [SerializeField, Tooltip("Toggle debug logging and rays.")]
+    private bool _debugMode = false;
+
     // initialize canfire as true, will be set to false with delay.
     private bool canFire = true;
 
@@ -75,6 +78,7 @@ public class WeaponHitScanBehaviour : MonoBehaviour
             // play audio clip
         }
 
+        // don't forget to make this use the pool behavior - bryon
         if (_fireVFX != null)
             Instantiate(_fireVFX, origin, Quaternion.identity);
 
@@ -83,19 +87,27 @@ public class WeaponHitScanBehaviour : MonoBehaviour
 
         if (!didHit)
         {
-            Debug.DrawRay(origin, direction * _maxDistance, Color.green, _fireDelay);
-            Debug.Log("Ya missed. Try again.");
+            if (_debugMode)
+            {
+                Debug.DrawRay(origin, direction * _maxDistance, Color.green, _fireDelay);
+                Debug.Log("Ya missed. Try again.");
+            }
+
             return null;
         }
 
-        Debug.DrawRay(origin, direction * raycastHit.distance, Color.red, _fireDelay);
-        Debug.Log("Ya hit somethin' partner.");
+        if(_debugMode)
+        {
+            Debug.DrawRay(origin, direction * raycastHit.distance, Color.red, _fireDelay);
+            Debug.Log("Ya hit somethin' partner.");
+        }
 
         if (_hitSound != null)
         {
             // play audio clip
         }
 
+        // don't forget to make this use the pool behavior - bryon
         if (_hitVFX != null)
             Instantiate(_hitVFX, raycastHit.point, Quaternion.identity);
 
