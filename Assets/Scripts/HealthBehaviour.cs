@@ -40,6 +40,8 @@ public class HealthBehaviour : MonoBehaviour
     /// </summary>
     public void AddOnTakeDamageTempAction(UnityAction action) => _onTakeDamageTemp.AddListener(action);
 
+    public void AddOnDeathAction(UnityAction action) => _onDeath.AddListener(action);
+
     /// <summary>
     /// Causes the GameObject to take damage. If the damage is zero or less, damage events will not be called.
     /// </summary>
