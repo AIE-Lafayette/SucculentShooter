@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +31,19 @@ public class GameManager : MonoBehaviour
     [Tooltip("The current score for the game.")]
     public int Score = 0;
 
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnDeath()
+    {
+        // end menu with score
+
+
+        RestartGame();
+    }
+
     private void Start()
     {
         if (Player != null)
@@ -36,16 +52,10 @@ public class GameManager : MonoBehaviour
 
             if (healthBehaviour == null)
                 healthBehaviour = Player.AddComponent<HealthBehaviour>();
+            
 
-            healthBehaviour.AddOnTakeDamageAction(delegate
-            {
 
-            });
-
-            healthBehaviour.AddOnDeathAction(delegate
-            {
-
-            });
+            healthBehaviour.AddOnDeathAction(OnDeath);
         }
     }
 }

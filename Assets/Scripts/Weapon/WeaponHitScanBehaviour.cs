@@ -31,6 +31,9 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Delay between shots.")]
     private float _fireDelay = 0.1f;
 
+    [SerializeField, Tooltip("How much damage the weapon should do per hit.")]
+    private int _damage = 1;
+
     [SerializeField, Tooltip("Toggle debug logging and rays.")]
     private bool _debugMode = false;
 
@@ -40,10 +43,11 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     // time that passes between shots. 
     private float elapsedTime = 0f;
 
+
     /// <summary>
     /// Takes care of input and delay for firing the weapons.
     /// </summary>
-    public void Update()
+    private void Update()
     {
         if (!canFire)
         {
@@ -56,7 +60,20 @@ public class WeaponHitScanBehaviour : MonoBehaviour
         }
 
         if (Input.GetKeyDown(_fireKey))
-            Fire(transform.TransformDirection(Vector3.forward));
+        {
+            Collider hit = Fire(transform.TransformDirection(Vector3.forward));
+
+            if (hit == null)
+                return;
+
+            // make sure they have a health behaviour before trying to damage them
+            HealthBehaviour healthBehaviour = hit.gameObject.GetComponent<HealthBehaviour>();
+            if (!healthBehaviour)
+                return;
+
+            healthBehaviour.TakeDamage(_damage);
+        }
+            
     }
     
 
