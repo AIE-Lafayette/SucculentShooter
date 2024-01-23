@@ -11,15 +11,10 @@ public class EnemySpawnBehaviour : MonoBehaviour
     private GameObject _enemyInstance;
 
     private float _spawnTimer;
-    private float _despawnTimer;
 
-    [Tooltip("The time between spawns for an enemy.")]
+    [Tooltip("The time (in seconds) between spawns for an enemy.")]
     [SerializeField]
     private float _secondsBetweenSpawn;
-
-    [Tooltip("The time between despawns for an enemy.")]
-    [SerializeField]
-    private float _secondsBetweenDespawn;
 
     // Start is called before the first frame update
     void Start()
@@ -31,18 +26,12 @@ public class EnemySpawnBehaviour : MonoBehaviour
     void Update()
     {
         _spawnTimer += Time.deltaTime;
-        _despawnTimer += Time.deltaTime;
+        //_despawnTimer += Time.deltaTime;
 
         if (_spawnTimer >= _secondsBetweenSpawn)
         {
-            _enemyInstance = ObjectPoolBehaviour.Instance.GetObject(_enemyToSpawn);
+            _enemyInstance = ObjectPoolBehaviour.Instance.GetObject(_enemyToSpawn, transform.position, transform.rotation);
             _spawnTimer = 0;
-        }
-
-        if (_despawnTimer >= _secondsBetweenDespawn)
-        {
-           ObjectPoolBehaviour.Instance.ReturnObject(_enemyInstance);
-            _despawnTimer = 0;
         }
 
     }
