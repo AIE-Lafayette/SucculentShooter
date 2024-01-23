@@ -53,7 +53,7 @@ public class WeaponHitScanBehaviour : MonoBehaviour
 
         // don't forget to make this use the pool behavior - bryon
         if (_fireVFX != null)
-            Instantiate(_fireVFX, origin, Quaternion.identity);
+            ObjectPoolBehaviour.Instance.GetObject(_fireVFX, origin, Quaternion.identity);
 
         RaycastHit raycastHit;
         bool didHit = Physics.Raycast(origin, direction, out raycastHit, _maxDistance, _layerMask);
@@ -81,7 +81,7 @@ public class WeaponHitScanBehaviour : MonoBehaviour
 
         // don't forget to make this use the pool behavior - bryon
         if (_hitVFX != null)
-            Instantiate(_hitVFX, raycastHit.point, Quaternion.identity);
+            ObjectPoolBehaviour.Instance.GetObject(_hitVFX, raycastHit.point, Quaternion.identity);
 
         Collider hit = raycastHit.collider;
 
