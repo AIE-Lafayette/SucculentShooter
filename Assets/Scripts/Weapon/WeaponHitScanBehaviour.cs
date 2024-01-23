@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class WeaponHitScanBehaviour : MonoBehaviour
 {
-
-    [SerializeField, Tooltip("Key that fires the weapon.")]
-    private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField, Tooltip("Layers that the bullets can collide with.")]
     private LayerMask _layerMask;
 
@@ -31,31 +28,11 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Delay between shots.")]
     private float _fireDelay = 0.1f;
 
-    // initialize canfire as true, will be set to false with delay.
-    private bool canFire = true;
+    [SerializeField, Tooltip("How much damage the weapon should do per hit.")]
+    private int _damage = 1;
 
-    // time that passes between shots. 
-    private float elapsedTime = 0f;
-
-    /// <summary>
-    /// Takes care of input and delay for firing the weapons.
-    /// </summary>
-    public void Update()
-    {
-        if (!canFire)
-        {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= _fireDelay)
-            {
-                canFire = true;
-                elapsedTime = 0f;
-            }
-        }
-
-        if (Input.GetKeyDown(_fireKey))
-            Fire(transform.TransformDirection(Vector3.forward));
-    }
-    
+    [SerializeField, Tooltip("Toggle debug logging and rays.")]
+    private bool _debugMode = false;
 
     /// <summary>
     /// Fires the weapon.
@@ -71,34 +48,53 @@ public class WeaponHitScanBehaviour : MonoBehaviour
 
         
         if (_fireSound != null)
-        {
-            // play audio clip
-        }
+            SoundManager.Instance.PlaySoundAtPosition(origin, _fireSound, 1, 0);
 
+
+        // don't forget to make this use the pool behavior - bryon
         if (_fireVFX != null)
-            Instantiate(_fireVFX, origin, Quaternion.identity);
+            ObjectPoolBehaviour.Instance.GetObject(_fireVFX, origin, Quaternion.identity);
 
         RaycastHit raycastHit;
         bool didHit = Physics.Raycast(origin, direction, out raycastHit, _maxDistance, _layerMask);
 
         if (!didHit)
         {
-            Debug.DrawRay(origin, direction * _maxDistance, Color.green, _fireDelay);
-            Debug.Log("Ya missed. Try again.");
+            if (_debugMode)
+            {
+                Debug.DrawRay(origin, direction * _maxDistance, Color.green, _fireDelay);
+                Debug.Log("Ya missed. Try again.");
+            }
+
             return null;
         }
 
-        Debug.DrawRay(origin, direction * raycastHit.distance, Color.red, _fireDelay);
-        Debug.Log("Ya hit somethin' partner.");
-
-        if (_hitSound != null)
+        if(_debugMode)
         {
-            // play audio clip
+            Debug.DrawRay(origin, direction * raycastHit.distance, Color.red, _fireDelay);
+            Debug.Log("Ya hit somethin' partner.");
         }
 
-        if (_hitVFX != null)
-            Instantiate(_hitVFX, raycastHit.point, Quaternion.identity);
+        if (_hitSound != null)
+            SoundManager.Instance.PlaySoundAtPosition(raycastHit.point, _fireSound, 1, 0);
 
-        return raycastHit.collider;
+
+        // don't forget to make this use the pool behavior - bryon
+        if (_hitVFX != null)
+            ObjectPoolBehaviour.Instance.GetObject(_hitVFX, raycastHit.point, Quaternion.identity);
+
+        Collider hit = raycastHit.collider;
+
+        if (hit == null)
+            return hit;
+
+        // make sure they have a health behaviour before trying to damage them
+        HealthBehaviour healthBehaviour = hit.gameObject.GetComponent<HealthBehaviour>();
+        if (!healthBehaviour)
+            return hit;
+
+        healthBehaviour.TakeDamage(_damage);
+
+        return hit;
     }
 }
