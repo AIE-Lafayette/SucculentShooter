@@ -1,38 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySeekBehaviour : MonoBehaviour
 {
 
-    [Tooltip("The game object that you want the enemy to look at and chase.")]
-    [SerializeField]
     private GameObject _target;
+
+    private float _despawnTimer;
+
+    [Tooltip("The time (in seconds) until the enemy despawns itself.")]
+    [SerializeField]
+    private float _secondsBetweenDespawn;
 
     [Tooltip("The speed that you want your enemy to chase its target. Default value is 0.")]
     [SerializeField]
     private float _speed;
 
-    //[SerializeField]
-    //private float _distance;
+    private Vector3 _moveDirection;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-
+        //Sets the enemy's target to be anything with the 'Player' tag in the scene. 
+        _target = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //_distance = Vector3.Distance(transform.position, _target.transform.position);
-        //Vector3 direction = _target.transform.position - transform.position;
+         _moveDirection = _target.transform.position - transform.position;
+        _moveDirection.y = 0;
 
-        //direction.Normalize();
+        //Has the enemy's forward set to whatever it's target is.
+        transform.LookAt(transform.position + _moveDirection);
 
-        transform.LookAt(_target.transform.position);
+        //Updates the position of the game object to move in the direction of its target.
+        transform.position += _moveDirection * _speed * Time.deltaTime;
 
-        transform.position = Vector3.MoveTowards(this.transform.position, _target.transform.position, _speed * Time.deltaTime);
+        //Timer used to track when the enemies need to begin despawning themselves.
+        _despawnTimer += Time.deltaTime;
+
+        if (_despawnTimer >= _secondsBetweenDespawn)
+        {
+           ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
+            _despawnTimer = 0;
+        }
+
+
+
 
     }
 }
