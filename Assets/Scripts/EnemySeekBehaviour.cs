@@ -20,6 +20,8 @@ public class EnemySeekBehaviour : MonoBehaviour
 
     private Vector3 _moveDirection;
 
+    private bool _canMove = true;
+
     private void Awake()
     {
         //Sets the enemy's target to be anything with the 'Player' tag in the scene. 
@@ -29,26 +31,49 @@ public class EnemySeekBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         _moveDirection = _target.transform.position - transform.position;
+        _moveDirection = _target.transform.position - transform.position;
         _moveDirection.y = 0;
 
         //Has the enemy's forward set to whatever it's target is.
         transform.LookAt(transform.position + _moveDirection);
 
-        //Updates the position of the game object to move in the direction of its target.
-        transform.position += _moveDirection * _speed * Time.deltaTime;
+        if (_canMove)
+        {
+            //Updates the position of the game object to move in the direction of its target.
+            transform.position += _moveDirection * _speed * Time.deltaTime;
+        }
+  
+        if (!_canMove)
+        {
+            Debug.Log("You are supposed to stop here.");
+            _moveDirection = transform.position;
+        }
+
+
+        ////Updates the position of the game object to move in the direction of its target.
+        //transform.position += _moveDirection * _speed * Time.deltaTime;
 
         //Timer used to track when the enemies need to begin despawning themselves.
         _despawnTimer += Time.deltaTime;
 
+
+
         if (_despawnTimer >= _secondsBetweenDespawn)
         {
-           ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
+            ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
             _despawnTimer = 0;
         }
 
 
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        _canMove = false;
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+        _canMove = true;
     }
 }
