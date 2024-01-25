@@ -27,11 +27,13 @@ public class SoundManager : MonoBehaviour
 			{
 				Debug.Log("No SoundManager found in scene. Creating one.");
 				_instance = new GameObject("SoundManager").AddComponent<SoundManager>();
-			}
+
+            }
 
 			return _instance;
 		}
 	}
+
 
 	private void Update()
 	{
