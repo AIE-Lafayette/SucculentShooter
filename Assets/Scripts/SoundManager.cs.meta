@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e6f0b6800edbccd4594846a7e107f394
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _musicSource: {instanceID: 0}
+  - _soundEffectSource: {instanceID: 0}
+  - _worldEffectSource: {fileID: 8983777553553132903, guid: 30a31bbdc48067e4dbf93089fe14e238, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
