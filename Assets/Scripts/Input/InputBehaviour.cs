@@ -21,8 +21,6 @@ public class InputBehaviour : MonoBehaviour
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 
-		Debug.Log(_rightShootAction.action.enabled);
-
 		if (_leftWeapon)
 			 _leftShootAction.action.performed += context => _leftWeapon.Fire(_leftWeapon.transform.TransformDirection(Vector3.forward));
 
