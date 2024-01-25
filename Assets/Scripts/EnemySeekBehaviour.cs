@@ -25,7 +25,7 @@ public class EnemySeekBehaviour : MonoBehaviour
     private void Awake()
     {
         //Sets the enemy's target to be anything with the 'Player' tag in the scene. 
-        _target = GameObject.FindWithTag("Player");
+        _target = GameManager.Instance.Player;
     }
 
     // Update is called once per frame
