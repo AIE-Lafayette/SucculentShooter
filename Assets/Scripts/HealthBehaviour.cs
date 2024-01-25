@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -40,6 +41,8 @@ public class HealthBehaviour : MonoBehaviour
     /// </summary>
     public void AddOnTakeDamageTempAction(UnityAction action) => _onTakeDamageTemp.AddListener(action);
 
+    public void AddOnDeathAction(UnityAction action) => _onDeath.AddListener(action);
+
     /// <summary>
     /// Causes the GameObject to take damage. If the damage is zero or less, damage events will not be called.
     /// </summary>
@@ -48,8 +51,14 @@ public class HealthBehaviour : MonoBehaviour
     public bool TakeDamage(int damage)
     {
         bool didDie = false;
+
         if (damage <= 0)
             return false;
+
+        if (_health <= 0)
+            return false;
+
+        _health -= damage;
 
         if (damage >= _health)
         {
@@ -58,15 +67,22 @@ public class HealthBehaviour : MonoBehaviour
             didDie = true;
         }
 
-        _health -= damage;
-
         _onTakeDamage?.Invoke();
         _onTakeDamageTemp?.Invoke();
 
         _onTakeDamageTemp.RemoveAllListeners();
 
-        if (_debugMode && _debugText)
-            _debugText.text = _health.ToString() + " / " + _maxHealth.ToString();
+        if (_debugMode)
+        {
+            if(_debugText)
+                _debugText.text = _health.ToString() + " / " + _maxHealth.ToString();
+
+            Debug.Log(gameObject.name + " took " + damage.ToString() + " damage.");
+
+            if (didDie)
+                Debug.Log(gameObject.name + " died.");
+        }
+            
 
         return didDie;
     }
