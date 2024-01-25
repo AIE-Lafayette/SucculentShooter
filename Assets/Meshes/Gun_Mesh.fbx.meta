@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 97f8513b0897b3641a389a6d4533bd28
+guid: edce2b0c5923b7345a58046b05821039
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColtMatt
+    second: {fileID: 2100000, guid: f80c4a6c7cd61ed4bb26d113cfb7533e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -76,7 +81,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
