@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6471496420297080347, guid: 2c764727a43aca84094827719e0b72cb, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6471496420297080347, guid: 2c764727a43aca84094827719e0b72cb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!1001 &6687600207870510063
+--- !u!1001 &6373914257320646753
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
