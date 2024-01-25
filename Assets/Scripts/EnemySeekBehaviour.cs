@@ -62,6 +62,7 @@ public class EnemySeekBehaviour : MonoBehaviour
         {
             ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
             _despawnTimer = 0;
+            _canMove = true;
         }
 
 
@@ -72,8 +73,4 @@ public class EnemySeekBehaviour : MonoBehaviour
         _canMove = false;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        _canMove = true;
-    }
 }
