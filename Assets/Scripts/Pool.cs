@@ -41,8 +41,12 @@ public class Pool
     /// <returns></returns>
     public GameObject GetObject()
     {
-        GameObject obj = _objects[_objects.Count];
-        _objects.Remove(_objects[_objects.Count]);
+        if (_objects.Count == 0)
+        {
+            return null;
+        }
+        GameObject obj = _objects[_objects.Count-1];
+        _objects.Remove(_objects[_objects.Count-1]);
 
         return obj;
     }

@@ -25,15 +25,32 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	private UnityEvent _gameStarted;
+	private UnityEvent _gameEnded;
+
 	[Tooltip("Player object instance.")]
 	public GameObject Player;
 
 	[Tooltip("The current score for the game.")]
 	public int Score = 0;
 
-	private void RestartGame()
+	private bool _isStarted = false;
+	public bool IsStarted => _isStarted;
+
+	public void AddGameStartedAction(UnityAction action) => _gameStarted.AddListener(action);
+	public void AddGameEndedAction(UnityAction action) => _gameEnded.AddListener(action);
+
+    private void RestartGame()
 	{
+		_gameEnded?.Invoke();
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+	public void StartGame()
+	{
+		_gameStarted?.Invoke();
+
+		_isStarted = true;
 	}
 
 	private void Start()
