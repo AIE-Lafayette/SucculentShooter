@@ -29,6 +29,11 @@ public class ObjectPoolBehaviour : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Returns the pool that contains the given game object,
+    /// </summary>
+    /// <param name="gameObject"></param>
+    /// <returns></returns>
     public Pool GetPool(GameObject gameObject)
     {
         for (int i = 0; i < _objectPools.Count; i++)
@@ -42,13 +47,19 @@ public class ObjectPoolBehaviour : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Gets an object that matches the reference from the pool and makes it active in the scene.
+    /// If an instance of that game object does not exist in the scene, it instantiates one.
+    /// </summary>
+    /// <param name="objectReference"></param>
+    /// <returns></returns>
     public GameObject GetObject(GameObject objectReference)
     {
         GameObject obj = null;
 
         for (int i = 0; i < _objectPools.Count; i++)
         {
-            if (!_objectPools[i].Contains(gameObject))
+            if (_objectPools[i].Name != (objectReference.name))
             {
                 continue;
             }
@@ -59,17 +70,26 @@ public class ObjectPoolBehaviour : MonoBehaviour
         {
             obj = CreateNewObject(objectReference);
         }
-
+        obj.SetActive(true);
         return obj;
     }
 
+    /// <summary>
+    /// Gets an object that matches the reference from the pool and makes it active in the scene.
+    /// If an instance of that game object does not exist in the scene, it instantiates one.
+    /// Moves the object to the given position and sets its rotation to match the given rotation.
+    /// </summary>
+    /// <param name="objectReference"></param>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
     public GameObject GetObject(GameObject objectReference, Vector3 position, Quaternion rotation)
     {
         GameObject obj = null;
 
         for (int i = 0; i < _objectPools.Count; i++)
         {
-            if (!_objectPools[i].Contains(gameObject))
+            if (_objectPools[i].Name != (objectReference.name))
             {
                 continue;
             }
@@ -84,9 +104,15 @@ public class ObjectPoolBehaviour : MonoBehaviour
         obj.transform.position = position;
         obj.transform.rotation = rotation;
 
+        obj.SetActive(true);
+
         return obj;
     }
 
+    /// <summary>
+    /// Places an object back into the pool and deactivates it in the scene.
+    /// </summary>
+    /// <param name="objectInstance"></param>
     public void ReturnObject(GameObject objectInstance)
     {
         Pool temp;
@@ -101,6 +127,11 @@ public class ObjectPoolBehaviour : MonoBehaviour
         objectInstance.SetActive(false);
     }
 
+    /// <summary>
+    /// Instantiates the given object and changes its name to match the name of the objectReference.
+    /// </summary>
+    /// <param name="objectReference"></param>
+    /// <returns></returns>
     private GameObject CreateNewObject(GameObject objectReference)
     {
         GameObject obj = Instantiate(objectReference);
@@ -112,6 +143,13 @@ public class ObjectPoolBehaviour : MonoBehaviour
         return obj;
     }
 
+    /// <summary>
+    /// Instantiates the given object with the given position and rotation. It also changes its name to match the name of the objectReference.
+    /// </summary>
+    /// <param name="objectReference"></param>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <returns></returns>
     private GameObject CreateNewObject(GameObject objectReference, Vector3 position, Quaternion rotation)
     {
         GameObject obj = Instantiate(objectReference, position, rotation);

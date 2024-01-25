@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class WeaponHitScanBehaviour : MonoBehaviour
 {
-
-    [SerializeField, Tooltip("Key that fires the weapon.")]
-    private KeyCode _fireKey = KeyCode.Mouse0;
     [SerializeField, Tooltip("Layers that the bullets can collide with.")]
     private LayerMask _layerMask;
 
@@ -31,34 +28,11 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Delay between shots.")]
     private float _fireDelay = 0.1f;
 
+    [SerializeField, Tooltip("How much damage the weapon should do per hit.")]
+    private int _damage = 1;
+
     [SerializeField, Tooltip("Toggle debug logging and rays.")]
     private bool _debugMode = false;
-
-    // initialize canfire as true, will be set to false with delay.
-    private bool canFire = true;
-
-    // time that passes between shots. 
-    private float elapsedTime = 0f;
-
-    /// <summary>
-    /// Takes care of input and delay for firing the weapons.
-    /// </summary>
-    public void Update()
-    {
-        if (!canFire)
-        {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime >= _fireDelay)
-            {
-                canFire = true;
-                elapsedTime = 0f;
-            }
-        }
-
-        if (Input.GetKeyDown(_fireKey))
-            Fire(transform.TransformDirection(Vector3.forward));
-    }
-    
 
     /// <summary>
     /// Fires the weapon.
@@ -74,13 +48,12 @@ public class WeaponHitScanBehaviour : MonoBehaviour
 
         
         if (_fireSound != null)
-        {
-            // play audio clip
-        }
+            SoundManager.Instance.PlaySoundAtPosition(origin, _fireSound, 1, 0);
+
 
         // don't forget to make this use the pool behavior - bryon
         if (_fireVFX != null)
-            Instantiate(_fireVFX, origin, Quaternion.identity);
+            ObjectPoolBehaviour.Instance.GetObject(_fireVFX, origin, Quaternion.identity);
 
         RaycastHit raycastHit;
         bool didHit = Physics.Raycast(origin, direction, out raycastHit, _maxDistance, _layerMask);
@@ -103,14 +76,25 @@ public class WeaponHitScanBehaviour : MonoBehaviour
         }
 
         if (_hitSound != null)
-        {
-            // play audio clip
-        }
+            SoundManager.Instance.PlaySoundAtPosition(raycastHit.point, _fireSound, 1, 0);
+
 
         // don't forget to make this use the pool behavior - bryon
         if (_hitVFX != null)
-            Instantiate(_hitVFX, raycastHit.point, Quaternion.identity);
+            ObjectPoolBehaviour.Instance.GetObject(_hitVFX, raycastHit.point, Quaternion.identity);
 
-        return raycastHit.collider;
+        Collider hit = raycastHit.collider;
+
+        if (hit == null)
+            return hit;
+
+        // make sure they have a health behaviour before trying to damage them
+        HealthBehaviour healthBehaviour = hit.gameObject.GetComponent<HealthBehaviour>();
+        if (!healthBehaviour)
+            return hit;
+
+        healthBehaviour.TakeDamage(_damage);
+
+        return hit;
     }
 }

@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MouseRotation",
+                    "type": "Value",
+                    "id": "d347748d-ff02-42de-9f77-7d0c2b2959eb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -44,6 +53,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5d20c2c-3587-4ae9-a48a-d7c3e3f14390",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "MouseRotation",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -310,6 +330,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8953a95-8c01-41de-8019-0b224cc5512e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse;Generic XR Controller",
                     "action": "Activate",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -834,11 +865,22 @@
                 },
                 {
                     "name": "",
+                    "id": "1c299f33-b6d7-44d9-89cc-e79b6037b820",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse",
+                    "action": "Activate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "150f414f-61bf-47b1-b4f8-f772a2a40565",
                     "path": "<XRController>{RightHand}/trigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Generic XR Controller",
+                    "groups": "Generic XR Controller;Mouse",
                     "action": "Activate Value",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1130,6 +1172,17 @@
                 {
                     "devicePath": "<XRController>{RightHand}",
                     "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Mouse",
+            "bindingGroup": "Mouse",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": true,
                     "isOR": false
                 }
             ]
