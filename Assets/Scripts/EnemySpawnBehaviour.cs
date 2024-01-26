@@ -20,6 +20,7 @@ public class EnemySpawnBehaviour : MonoBehaviour
     void Start()
     {
         _enemyInstance = ObjectPoolBehaviour.Instance.GetObject(_enemyToSpawn, transform.position, transform.rotation);
+        _enemyInstance.GetComponent<EnemySeekBehaviour>().OnSpawn();
     }
 
     // Update is called once per frame
@@ -30,6 +31,7 @@ public class EnemySpawnBehaviour : MonoBehaviour
         if (_spawnTimer >= _secondsBetweenSpawn)
         {
             _enemyInstance = ObjectPoolBehaviour.Instance.GetObject(_enemyToSpawn, transform.position, transform.rotation);
+            _enemyInstance.GetComponent<EnemySeekBehaviour>().OnSpawn();
             _spawnTimer = 0;
         }
 
