@@ -113,6 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _secondsBetweenDespawn: 30
+  _explosionCountdown: 3
+  _explodeMyself: {fileID: 2193519283675997275, guid: 78777c75cc169b542a9a4275320eba48, type: 3}
   _speed: 0.25
 --- !u!54 &-7851877080694071189
 Rigidbody:
