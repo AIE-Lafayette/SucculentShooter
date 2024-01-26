@@ -43,7 +43,13 @@ public class GameManager : MonoBehaviour
 	[Tooltip("The current score for the game.")]
 	public int Score = 0;
 
-	private bool _isStarted = false;
+    [SerializeField]
+    private GameObject _leftController;
+
+    [SerializeField]
+    private GameObject _rightController;
+
+    private bool _isStarted = false;
 	private bool _isPaused = false;
 	public bool IsStarted => _isStarted;
 	public bool IsPaused => _isPaused;	
@@ -58,6 +64,8 @@ public class GameManager : MonoBehaviour
         {
             _gameActiveObjects[i].SetActive(false);
         }
+
+		_isStarted = false;
 
         _gameEnded?.Invoke();
     }
@@ -107,5 +115,10 @@ public class GameManager : MonoBehaviour
 			
 			healthBehaviour.AddOnDeathAction(EndGame);
 		}
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }
