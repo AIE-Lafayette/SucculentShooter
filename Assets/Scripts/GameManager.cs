@@ -25,8 +25,17 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	[SerializeField, Tooltip("Array of game objects that should be toggled off when the game is not started and on when it is.")]
+	private GameObject[] _gameActiveObjects;
+
+	[SerializeField, Tooltip("Called when the game starts.")]
 	private UnityEvent _gameStarted;
+
+	[SerializeField, Tooltip("Called when the game ends.")]
 	private UnityEvent _gameEnded;
+
+	[SerializeField, Tooltip("Called when the game is paused.")]
+	private UnityEvent _gamePaused;
 
 	[Tooltip("Player object instance.")]
 	public GameObject Player;
@@ -34,20 +43,57 @@ public class GameManager : MonoBehaviour
 	[Tooltip("The current score for the game.")]
 	public int Score = 0;
 
-	private bool _isStarted = false;
+    [SerializeField]
+    private GameObject _leftController;
+
+    [SerializeField]
+    private GameObject _rightController;
+
+    private bool _isStarted = false;
+	private bool _isPaused = false;
 	public bool IsStarted => _isStarted;
+	public bool IsPaused => _isPaused;	
 
 	public void AddGameStartedAction(UnityAction action) => _gameStarted.AddListener(action);
 	public void AddGameEndedAction(UnityAction action) => _gameEnded.AddListener(action);
+	public void AddGamePausedAction(UnityAction action) => _gamePaused.AddListener(action);
 
-    private void RestartGame()
+    public void EndGame()
 	{
-		_gameEnded?.Invoke();
+        for (int i = 0; i < _gameActiveObjects.Length; i++)
+        {
+            _gameActiveObjects[i].SetActive(false);
+        }
+
+		_isStarted = false;
+
+        _gameEnded?.Invoke();
+    }
+
+	public void ToggleGamePaused()
+	{
+		if (!_isStarted)
+			return;
+
+		_isPaused = !_isPaused;
+
+		Time.timeScale = _isPaused ? 0 : 1;
+
+		_gamePaused?.Invoke();
+	}
+
+    public void RestartGame()
+	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 	public void StartGame()
 	{
+		for (int i = 0; i < _gameActiveObjects.Length; i++)
+		{
+			_gameActiveObjects[i].SetActive(true);
+		}
+
 		_gameStarted?.Invoke();
 
 		_isStarted = true;
@@ -55,14 +101,24 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
-		if (Player != null)
+        for (int i = 0; i < _gameActiveObjects.Length; i++)
+        {
+            _gameActiveObjects[i].SetActive(false);
+        }
+
+        if (Player != null)
 		{
 			HealthBehaviour healthBehaviour = Player.GetComponent<HealthBehaviour>();
 
 			if (healthBehaviour == null)
 				healthBehaviour = Player.AddComponent<HealthBehaviour>();
 			
-			healthBehaviour.AddOnDeathAction(RestartGame);
+			healthBehaviour.AddOnDeathAction(EndGame);
 		}
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }

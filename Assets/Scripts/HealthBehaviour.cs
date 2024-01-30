@@ -28,7 +28,28 @@ public class HealthBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Debug text element to show health if Debug Mode is on.")]
     private Text _debugText;
 
-    public int Health { set => _health = value; get => _health; }
+    public int Health { 
+        set {
+            if (value < _health)
+            {
+                _onTakeDamage?.Invoke();
+                _onTakeDamageTemp.Invoke();
+
+                _onTakeDamageTemp.RemoveAllListeners();
+            }
+               
+
+            _health = value; 
+            
+            if (_health <= 0)
+            {
+                _health = 0;
+                _onDeath.Invoke();
+            }
+        } 
+        
+        get => _health; 
+    }
     public int MaxHealth => _maxHealth;
 
     /// <summary>

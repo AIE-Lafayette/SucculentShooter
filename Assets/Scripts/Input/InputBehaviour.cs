@@ -9,6 +9,8 @@ public class InputBehaviour : MonoBehaviour
 	private InputActionReference _leftShootAction;
 	[SerializeField, Tooltip("Action used for firing the player's right weapon.")]
 	private InputActionReference _rightShootAction;
+	[SerializeField, Tooltip("Action used to pause and unpause the game.")]
+	private InputActionReference _pauseAction;
 
 	[SerializeField, Tooltip("Player's left weapon.")]
 	private WeaponHitScanBehaviour _leftWeapon;
@@ -26,6 +28,8 @@ public class InputBehaviour : MonoBehaviour
 
 		if(_rightWeapon)
 			_rightShootAction.action.performed += context => _rightWeapon.Fire(_rightWeapon.transform.TransformDirection(Vector3.forward));
+
+		_pauseAction.action.performed += context => GameManager.Instance.ToggleGamePaused();
   
 	}
 }
