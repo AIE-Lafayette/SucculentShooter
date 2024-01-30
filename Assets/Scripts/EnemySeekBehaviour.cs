@@ -95,6 +95,7 @@ public class EnemySeekBehaviour : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Barwall"))
@@ -132,6 +133,7 @@ public class EnemySeekBehaviour : MonoBehaviour
     private void OnEnable()
     {
         _despawnTimer = 0;
+        PreparingExplosion = false;
     }
 
 }

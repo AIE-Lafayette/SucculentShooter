@@ -16,7 +16,8 @@ public class ExplosionBehaviour : MonoBehaviour
     [SerializeField]
     private float _explosionPSDespawnWaitTime;
 
-    private
+    public float ExplosionPSDespawnWaitTime { get => _explosionPSDespawnWaitTime; private set => _explosionPSDespawnWaitTime = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +31,7 @@ public class ExplosionBehaviour : MonoBehaviour
        
             _explosionPSDespawnTimer += Time.deltaTime;
 
-            if (_explosionPSDespawnTimer >= _explosionPSDespawnWaitTime)
+            if (_explosionPSDespawnTimer >= ExplosionPSDespawnWaitTime)
             {
                 ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
                 _explosionPSDespawnTimer = 0;

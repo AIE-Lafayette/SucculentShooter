@@ -6,29 +6,35 @@ public class CactusAnimationBehaviour : MonoBehaviour
 {
     [SerializeField]
     private Animator _animator;
+    [SerializeField, Tooltip("The amount of time that has to be left in the explosion countdown in order for the anmimation to play.")]
+    private float _explodeAnimationTimeStamp;
     private HealthBehaviour _healthBehaviour;
     private EnemySeekBehaviour _enemySeekBehaviour;
-    private ExplosionBehaviour _explosionBehaviour;
 
     // Start is called before the first frame update
     void Awake()
     {
         _healthBehaviour = GetComponent<HealthBehaviour>();
         _enemySeekBehaviour = GetComponent<EnemySeekBehaviour>();
-        _explosionBehaviour = GetComponent<ExplosionBehaviour>();
 
         _healthBehaviour.AddOnTakeDamageAction(() => _animator.SetTrigger("Hit"));
         
+        _healthBehaviour.AddOnDeathAction(() => _animator.SetTrigger("Dead"));
+    }
+
+    private void OnEnable()
+    {
+        _animator.SetTrigger("Reset");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (_enemySeekBehaviour.ExplosionCountdown / _enemySeekBehaviour.ExplosionTimer <= 0.2f)
-        //{
-        //    _animator.SetTrigger("Explode");
-        //}
+        if (_enemySeekBehaviour.ExplosionCountdown - _enemySeekBehaviour.ExplosionTimer <= _explodeAnimationTimeStamp)
+        {
+            _animator.SetTrigger("Explode");
+        }
 
-        //_animator.SetBool("Shake", _enemySeekBehaviour.PreparingExplosion);
+        _animator.SetBool("Shake", _enemySeekBehaviour.PreparingExplosion);
     }
 }
