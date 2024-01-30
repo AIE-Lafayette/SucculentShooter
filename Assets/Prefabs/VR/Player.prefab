@@ -133,8 +133,16 @@ MonoBehaviour:
   _onDeath:
     m_PersistentCalls:
       m_Calls: []
+  _onDeathTemp:
+    m_PersistentCalls:
+      m_Calls: []
+  _onDeathSingle:
+    m_PersistentCalls:
+      m_Calls: []
   _debugMode: 0
   _debugText: {fileID: 0}
+  _hitVFX: {fileID: 0}
+  _hitAudioClip: {fileID: 0}
 --- !u!114 &9039049000668122969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _leftShootAction: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   _rightShootAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  _pauseAction: {fileID: 0}
   _leftWeapon: {fileID: 6100884486042865065}
   _rightWeapon: {fileID: 6100884485021548285}
 --- !u!114 &2607092549629575735
@@ -537,7 +546,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.005
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -548,8 +557,17 @@ LineRenderer:
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -1072,7 +1090,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.005
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -1083,8 +1101,17 @@ LineRenderer:
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

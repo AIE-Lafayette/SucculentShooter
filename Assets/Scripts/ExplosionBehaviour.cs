@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class ExplosionBehaviour : MonoBehaviour
 {
-    private GameObject _target;
-
     [Tooltip(" The damage given to a player once an explosion as occured.")]
     [SerializeField]
-    private int _damage = 0;
+    private int _damage = 1;
 
     private float _explosionPSDespawnTimer;
 
@@ -18,36 +16,26 @@ public class ExplosionBehaviour : MonoBehaviour
 
     public float ExplosionPSDespawnWaitTime { get => _explosionPSDespawnWaitTime; private set => _explosionPSDespawnWaitTime = value; }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        //Sets the enemy's target to be the 'Player' as designated by the game manager. 
-        _target = GameManager.Instance.Player;
+        HealthBehaviour healthBehaviour = GameManager.Instance.Player.GetComponent<HealthBehaviour>();
+
+        Debug.Assert(healthBehaviour != null, "Player must have a health behaviour.");
+
+        healthBehaviour.TakeDamage(_damage);
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-            _explosionPSDespawnTimer += Time.deltaTime;
 
-            if (_explosionPSDespawnTimer >= ExplosionPSDespawnWaitTime)
-            {
-                ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
-                _explosionPSDespawnTimer = 0;
-            }
+        _explosionPSDespawnTimer += Time.deltaTime;
 
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        if (_explosionPSDespawnTimer >= ExplosionPSDespawnWaitTime)
         {
-            Debug.Log("You've taken damage from an explosion.");
-            _target.GetComponent<HealthBehaviour>().TakeDamage(_damage);
+            ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
+            _explosionPSDespawnTimer = 0;
         }
-            
     }
 
 
