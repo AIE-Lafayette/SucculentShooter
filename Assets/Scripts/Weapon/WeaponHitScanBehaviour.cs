@@ -41,6 +41,9 @@ public class WeaponHitScanBehaviour : MonoBehaviour
     /// <returns>The collider hit by the ray, if any.</returns>
     public Collider Fire(Vector3 direction)
     {
+        if (GameManager.Instance.IsPaused || !GameManager.Instance.IsStarted)
+            return null;
+
         Vector3 origin = transform.position;
 
         if (_firePoint != null)
