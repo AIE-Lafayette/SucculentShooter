@@ -19,6 +19,14 @@ PrefabInstance:
       propertyPath: _explosionDelay
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 936799498648384055, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+      propertyPath: _explosionSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: e6c6167944c22ca4a9d9e133a3a59337, type: 3}
+    - target: {fileID: 936799498648384055, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+      propertyPath: _secondsBetweenDespawn
+      value: 1e+19
+      objectReference: {fileID: 0}
     - target: {fileID: 2932098688681222362, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
       propertyPath: m_Name
       value: Enemy1 Variant
@@ -66,6 +74,22 @@ PrefabInstance:
     - target: {fileID: 2986254508911067378, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809320623220621765, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+      propertyPath: _health
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809320623220621765, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+      propertyPath: _hitVFX
+      value: 
+      objectReference: {fileID: 6642446590208785299, guid: 102fce724dc37db439734e8d05bb034c, type: 3}
+    - target: {fileID: 4809320623220621765, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+      propertyPath: _debugMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4809320623220621765, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+      propertyPath: _maxHealth
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5540956458963693044, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
       propertyPath: m_Enabled
@@ -132,6 +156,10 @@ PrefabInstance:
     - target: {fileID: 4384239368107158570, guid: 7c8e35f3cda8d39458dcf977b39689f1, type: 3}
       propertyPath: m_Name
       value: Cactus_01_SkeletalMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384239368107158570, guid: 7c8e35f3cda8d39458dcf977b39689f1, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7024504921038974186, guid: 7c8e35f3cda8d39458dcf977b39689f1, type: 3}
       propertyPath: m_Controller

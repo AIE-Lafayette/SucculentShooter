@@ -92,7 +92,7 @@ public class WeaponHitScanBehaviour : MonoBehaviour
             return hit;
 
         // make sure they have a health behaviour before trying to damage them
-        HealthBehaviour healthBehaviour = hit.gameObject.GetComponent<HealthBehaviour>();
+        HealthBehaviour healthBehaviour = hit.attachedRigidbody.GetComponent<HealthBehaviour>();
         if (!healthBehaviour)
             return hit;
 

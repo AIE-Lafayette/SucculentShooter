@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8f852a81be3cd4ca96acdc27b4333b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionSFX: {fileID: 8300000, guid: e6c6167944c22ca4a9d9e133a3a59337, type: 3}
   _secondsBetweenDespawn: 15
   _explosionCountdown: 3
   _explosionParticleSystem: {fileID: 2193519283675997275, guid: 78777c75cc169b542a9a4275320eba48, type: 3}
@@ -144,6 +145,8 @@ MonoBehaviour:
       m_Calls: []
   _debugMode: 1
   _debugText: {fileID: 0}
+  _hitVFX: {fileID: 0}
+  _hitAudioClip: {fileID: 0}
 --- !u!114 &167965398177957414
 MonoBehaviour:
   m_ObjectHideFlags: 0

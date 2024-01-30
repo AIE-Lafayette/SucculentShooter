@@ -7,6 +7,9 @@ public class HealthBottlesBehaviour : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> _healthBottles;
 
+    [SerializeField]
+    private AudioClip _bottleBreakSound;
+
     void UpdateBottles()
     {
         if (_healthBottles.Count == 0)
@@ -24,6 +27,10 @@ public class HealthBottlesBehaviour : MonoBehaviour
     private void Start()
     {
         UpdateBottles();
-        GameManager.Instance.Player.GetComponent<HealthBehaviour>().AddOnTakeDamageAction(UpdateBottles);
+        GameManager.Instance.Player.GetComponent<HealthBehaviour>().AddOnTakeDamageAction(() =>
+        {
+            SoundManager.Instance.PlaySoundAtPosition(transform.position, _bottleBreakSound);
+            UpdateBottles();
+        });
     }
 }

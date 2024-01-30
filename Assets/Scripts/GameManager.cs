@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class GameManager : MonoBehaviour
@@ -65,6 +66,11 @@ public class GameManager : MonoBehaviour
             _gameActiveObjects[i].SetActive(false);
         }
 
+        _leftController.GetComponent<XRInteractorLineVisual>().enabled = true;
+        _rightController.GetComponent<XRInteractorLineVisual>().enabled = true;
+
+        Time.timeScale = 0;
+
 		_isStarted = false;
 
         _gameEnded?.Invoke();
@@ -79,7 +85,10 @@ public class GameManager : MonoBehaviour
 
 		Time.timeScale = _isPaused ? 0 : 1;
 
-		_gamePaused?.Invoke();
+        _leftController.GetComponent<XRInteractorLineVisual>().enabled = _isPaused;
+        _rightController.GetComponent<XRInteractorLineVisual>().enabled = _isPaused;
+
+        _gamePaused?.Invoke();
 	}
 
     public void RestartGame()
@@ -89,7 +98,11 @@ public class GameManager : MonoBehaviour
 
 	public void StartGame()
 	{
-		for (int i = 0; i < _gameActiveObjects.Length; i++)
+		Time.timeScale = 1;
+        _leftController.GetComponent<XRInteractorLineVisual>().enabled = false;
+        _rightController.GetComponent<XRInteractorLineVisual>().enabled = false;
+
+        for (int i = 0; i < _gameActiveObjects.Length; i++)
 		{
 			_gameActiveObjects[i].SetActive(true);
 		}
@@ -101,6 +114,9 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
+		Time.timeScale = 0;
+        _leftController.GetComponent<XRInteractorLineVisual>().enabled = true;
+		_rightController.GetComponent<XRInteractorLineVisual>().enabled = true;
         for (int i = 0; i < _gameActiveObjects.Length; i++)
         {
             _gameActiveObjects[i].SetActive(false);

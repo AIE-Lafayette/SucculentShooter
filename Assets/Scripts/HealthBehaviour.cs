@@ -22,11 +22,23 @@ public class HealthBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Called when the GameObject's health drops at or below zero.")]
     private UnityEvent _onDeath;
 
+    [SerializeField, Tooltip("Called when the GameObject's health drops at or below zero, but only once.")]
+    private UnityEvent _onDeathTemp;
+
+    [SerializeField, Tooltip("Called when the GameObject dies, but only accepts one connection. New connections override old.")]
+    private UnityEvent _onDeathSingle;
+
     [SerializeField, Tooltip("Whether or not debug elements should show.")]
     private bool _debugMode = false;
 
     [SerializeField, Tooltip("Debug text element to show health if Debug Mode is on.")]
     private Text _debugText;
+
+    [SerializeField, Tooltip("VFX for when the object is hit.")]
+    private GameObject _hitVFX;
+
+    [SerializeField, Tooltip("SFX for when the object is hit.")]
+    private AudioClip _hitAudioClip;
 
     public int Health { 
         set {
@@ -62,7 +74,27 @@ public class HealthBehaviour : MonoBehaviour
     /// </summary>
     public void AddOnTakeDamageTempAction(UnityAction action) => _onTakeDamageTemp.AddListener(action);
 
+    /// <summary>
+    /// Add a listener to the OnDeath event
+    /// </summary>
+    /// <param name="action"></param>
     public void AddOnDeathAction(UnityAction action) => _onDeath.AddListener(action);
+
+    /// <summary>
+    /// Add a listener to the OnDeathTemp event.
+    /// </summary>
+    /// <param name="action"></param>
+    public void AddOnDeathTempAction(UnityAction action) => _onDeathTemp.AddListener(action);
+
+    /// <summary>
+    /// Add a listener to the OnDeathSingle event.
+    /// </summary>
+    /// <param name="action"></param>
+    public void AddOnDeathSingleAction(UnityAction action)
+    {
+        _onDeathSingle.RemoveAllListeners();
+        _onDeathSingle.AddListener(action);
+    }
 
     /// <summary>
     /// Causes the GameObject to take damage. If the damage is zero or less, damage events will not be called.
@@ -81,10 +113,15 @@ public class HealthBehaviour : MonoBehaviour
 
         _health -= damage;
 
-        if (damage >= _health)
+        if (damage > _health)
         {
             _health = 0;
             _onDeath?.Invoke();
+            _onDeathTemp?.Invoke();
+            _onDeathSingle?.Invoke();
+
+            _onDeathTemp.RemoveAllListeners();
+            _onDeathSingle.RemoveAllListeners();
             didDie = true;
         }
 
@@ -103,7 +140,12 @@ public class HealthBehaviour : MonoBehaviour
             if (didDie)
                 Debug.Log(gameObject.name + " died.");
         }
-            
+
+        if (_hitVFX)
+            ObjectPoolBehaviour.Instance.GetObject(_hitVFX, transform.position, Quaternion.identity);
+
+        if (_hitAudioClip)
+            SoundManager.Instance.PlaySoundAtPosition(transform.position, _hitAudioClip);
 
         return didDie;
     }
