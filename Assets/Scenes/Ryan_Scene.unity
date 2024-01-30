@@ -679,7 +679,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1030054686
 Transform:
   m_ObjectHideFlags: 0
@@ -707,7 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32ab5225455f1246a99408e3c8deb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyToSpawn: {fileID: 2932098688681222362, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+  _enemyToSpawn: {fileID: 1722784441011978128, guid: 59beac4aeb3087c4eba5b8140fcf211d, type: 3}
   _secondsBetweenSpawn: 5
 --- !u!1 &1072793235
 GameObject:
@@ -1312,7 +1312,7 @@ GameObject:
   - component: {fileID: 1243975450}
   m_Layer: 0
   m_Name: InvisibleEnemyStopper
-  m_TagString: Untagged
+  m_TagString: Barwall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1933,7 +1933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32ab5225455f1246a99408e3c8deb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyToSpawn: {fileID: 2932098688681222362, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+  _enemyToSpawn: {fileID: 2134696274993640748, guid: f30f61c204684f948a573e16e449d4b8, type: 3}
   _secondsBetweenSpawn: 5
 --- !u!4 &1835735687
 Transform:
@@ -1966,7 +1966,7 @@ GameObject:
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2045608337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c32ab5225455f1246a99408e3c8deb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyToSpawn: {fileID: 2932098688681222362, guid: 2000e327d11c5114b990ca65e205a490, type: 3}
+  _enemyToSpawn: {fileID: 6788944191586143357, guid: f7727389bccae324aab3f4ab1ba38fd3, type: 3}
   _secondsBetweenSpawn: 5
 --- !u!4 &2045608338
 Transform:

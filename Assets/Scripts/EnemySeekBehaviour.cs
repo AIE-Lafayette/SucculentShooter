@@ -22,7 +22,7 @@ public class EnemySeekBehaviour : MonoBehaviour
 
     [Tooltip("The prefab of the particle system you wish to instantiate, when the enemy explodes itself in the game.")]
     [SerializeField]
-    private GameObject _explodeMyself;
+    private GameObject _explosionParticleSystem;
 
     private GameObject _explosionInstance;
 
@@ -35,6 +35,11 @@ public class EnemySeekBehaviour : MonoBehaviour
     private bool _canMove = true;
 
     private bool _isExploded = false;
+    private bool _preparingExplosion;
+
+    public bool PreparingExplosion { get => _preparingExplosion; set => _preparingExplosion = value; }
+    public float ExplosionCountdown { get => _explosionCountdown; set => _explosionCountdown = value; }
+    public float ExplosionTimer { get => _explosionTimer; set => _explosionTimer = value; }
 
     private void Awake()
     {
@@ -42,12 +47,12 @@ public class EnemySeekBehaviour : MonoBehaviour
         _target = GameManager.Instance.Player;
     }
 
-    private void Start()
+    public void OnSpawn()
     {
         HealthBehaviour healthBehaviour = GetComponent<HealthBehaviour>();
+        healthBehaviour.Health = healthBehaviour.MaxHealth;
         healthBehaviour.AddOnDeathAction(() =>
         {
-            // explode
             ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
         });
     }
@@ -76,13 +81,8 @@ public class EnemySeekBehaviour : MonoBehaviour
 
         }
 
-
-        ////Updates the position of the game object to move in the direction of its target.
-        //transform.position += _moveDirection * _speed * Time.deltaTime;
-
         //Timer used to track when the enemies need to begin despawning themselves.
         _despawnTimer += Time.deltaTime;
-
 
 
         if (_despawnTimer >= _secondsBetweenDespawn)
@@ -95,34 +95,45 @@ public class EnemySeekBehaviour : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
-        _canMove = false;
+        if (other.CompareTag("Barwall"))
+        {
+            _canMove = false;
+            PreparingExplosion = true;
+        }
     }
 
     private void ExplodeMyself()
     {
-        _explosionTimer += Time.deltaTime;
+        ExplosionTimer += Time.deltaTime;
 
-        if (_explosionTimer >= _explosionCountdown)
+        if (ExplosionTimer >= ExplosionCountdown)
         {
-            _explosionInstance = ObjectPoolBehaviour.Instance.GetObject(_explodeMyself, transform.position, transform.rotation);
+            _explosionInstance = ObjectPoolBehaviour.Instance.GetObject(_explosionParticleSystem, transform.position, transform.rotation);
 
-            _explosionTimer = 0;
+            ExplosionTimer = 0;
 
             _isExploded = true;
         }
 
         if (_isExploded)
         {
+
             ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
 
             _isExploded = false;
             _canMove = true;
 
-            //ObjectPoolBehaviour.Instance.ReturnObject(_explosionInstance);
         }
 
+    }
+
+    private void OnEnable()
+    {
+        _despawnTimer = 0;
+        PreparingExplosion = false;
     }
 
 }

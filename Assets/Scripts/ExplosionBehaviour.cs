@@ -10,7 +10,14 @@ public class ExplosionBehaviour : MonoBehaviour
     [SerializeField]
     private int _damage = 0;
 
-    private
+    private float _explosionPSDespawnTimer;
+
+    [Tooltip("The time (in seconds) until the particle system instantiated by an enemy despawns after it explodes itself in the scene.")]
+    [SerializeField]
+    private float _explosionPSDespawnWaitTime;
+
+    public float ExplosionPSDespawnWaitTime { get => _explosionPSDespawnWaitTime; private set => _explosionPSDespawnWaitTime = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +28,26 @@ public class ExplosionBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+            _explosionPSDespawnTimer += Time.deltaTime;
+
+            if (_explosionPSDespawnTimer >= ExplosionPSDespawnWaitTime)
+            {
+                ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
+                _explosionPSDespawnTimer = 0;
+            }
+
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("You've taken damage from an explosion.");
-        _target.GetComponent<HealthBehaviour>().TakeDamage(_damage);
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("You've taken damage from an explosion.");
+            _target.GetComponent<HealthBehaviour>().TakeDamage(_damage);
+        }
+            
     }
 
 
