@@ -10,6 +10,9 @@ public class EnemySeekBehaviour : MonoBehaviour
 
     private float _despawnTimer;
 
+    [SerializeField, Tooltip("Sound that plays when the enemy explodes.")]
+    private AudioClip _explosionSFX;
+
     [Tooltip("The time (in seconds) until the enemy despawns itself.")]
     [SerializeField]
     private float _secondsBetweenDespawn;
@@ -51,8 +54,9 @@ public class EnemySeekBehaviour : MonoBehaviour
     {
         HealthBehaviour healthBehaviour = GetComponent<HealthBehaviour>();
         healthBehaviour.Health = healthBehaviour.MaxHealth;
-        healthBehaviour.AddOnDeathAction(() =>
+        healthBehaviour.AddOnDeathSingleAction(() =>
         {
+            GameManager.Instance.Score += 1000;
             ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
         });
     }
@@ -111,6 +115,11 @@ public class EnemySeekBehaviour : MonoBehaviour
 
         if (ExplosionTimer >= ExplosionCountdown)
         {
+            if (_explosionSFX)
+                SoundManager.Instance.PlaySoundAtPosition(transform.position, _explosionSFX);
+
+          
+
             _explosionInstance = ObjectPoolBehaviour.Instance.GetObject(_explosionParticleSystem, transform.position, transform.rotation);
 
             ExplosionTimer = 0;

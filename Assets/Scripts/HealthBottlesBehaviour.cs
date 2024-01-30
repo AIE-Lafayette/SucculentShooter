@@ -7,6 +7,7 @@ public class HealthBottlesBehaviour : MonoBehaviour
 	[SerializeField]
 	private List<GameObject> _healthBottles;
 
+    [SerializeField]
     private AudioClip _bottleBreakSound;
 
     void UpdateBottles()
