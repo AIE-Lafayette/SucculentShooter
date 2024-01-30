@@ -28,6 +28,9 @@ public class HealthBehaviour : MonoBehaviour
     [SerializeField, Tooltip("Debug text element to show health if Debug Mode is on.")]
     private Text _debugText;
 
+    [SerializeField, Tooltip("VFX for when the object is hit.")]
+    private GameObject _hitVFX;
+
     public int Health { 
         set {
             if (value < _health)
@@ -103,7 +106,8 @@ public class HealthBehaviour : MonoBehaviour
             if (didDie)
                 Debug.Log(gameObject.name + " died.");
         }
-            
+
+        ObjectPoolBehaviour.Instance.GetObject(_hitVFX);
 
         return didDie;
     }

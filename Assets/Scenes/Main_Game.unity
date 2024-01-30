@@ -200,6 +200,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 85271481}
   m_CullTransparentMesh: 1
+--- !u!1 &97864030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2625323481993237560, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+  m_PrefabInstance: {fileID: 1441989654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &104967262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1062,6 +1067,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 609025902}
   m_CullTransparentMesh: 1
+--- !u!1 &741701858 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5079041340346685676, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+  m_PrefabInstance: {fileID: 1441989654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &887579214 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6100884486042865079, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
@@ -1674,13 +1684,45 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6100884485021548285, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _hitVFX
+      value: 
+      objectReference: {fileID: 2785714794619112048, guid: 350dc36dd6a74514a857b433f73033fd, type: 3}
+    - target: {fileID: 6100884485021548285, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
       propertyPath: _fireVFX
+      value: 
+      objectReference: {fileID: 2785714794619112048, guid: 350dc36dd6a74514a857b433f73033fd, type: 3}
+    - target: {fileID: 6100884485021548285, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f7a80b85c0b6c014a9369e555efea453, type: 3}
+    - target: {fileID: 6100884485021548285, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _firePoint
+      value: 
+      objectReference: {fileID: 97864030}
+    - target: {fileID: 6100884485021548285, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _maxDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6100884486042865065, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _hitVFX
       value: 
       objectReference: {fileID: 2785714794619112048, guid: 350dc36dd6a74514a857b433f73033fd, type: 3}
     - target: {fileID: 6100884486042865065, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
       propertyPath: _fireVFX
       value: 
       objectReference: {fileID: 2785714794619112048, guid: 350dc36dd6a74514a857b433f73033fd, type: 3}
+    - target: {fileID: 6100884486042865065, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _hitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: f7a80b85c0b6c014a9369e555efea453, type: 3}
+    - target: {fileID: 6100884486042865065, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _firePoint
+      value: 
+      objectReference: {fileID: 741701858}
+    - target: {fileID: 6100884486042865065, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
+      propertyPath: _maxDistance
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6100884486734130836, guid: 8e711c0a54331a3488b3f4aa482857f2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.002
