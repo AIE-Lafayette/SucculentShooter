@@ -36,7 +36,7 @@ public class EnemySeekBehaviour : MonoBehaviour
     private Vector3 _moveDirection;
 
     private bool _canMove = true;
-
+    private bool _isAlive = true;
     private bool _isExploded = false;
     private bool _preparingExplosion;
 
@@ -52,10 +52,12 @@ public class EnemySeekBehaviour : MonoBehaviour
 
     public void OnSpawn()
     {
+        _isAlive = true;
         HealthBehaviour healthBehaviour = GetComponent<HealthBehaviour>();
         healthBehaviour.Health = healthBehaviour.MaxHealth;
         healthBehaviour.AddOnDeathSingleAction(() =>
         {
+            _isAlive = false;
             GameManager.Instance.Score += 1000;
             ObjectPoolBehaviour.Instance.ReturnObject(gameObject);
         });
@@ -76,13 +78,11 @@ public class EnemySeekBehaviour : MonoBehaviour
             transform.position += _moveDirection * _speed * Time.deltaTime;
         }
 
-        if (!_canMove)
+        if (!_canMove && _isAlive)
         {
-            Debug.Log("You are supposed to stop here.");
             _moveDirection = transform.position;
 
             ExplodeMyself();
-
         }
 
         //Timer used to track when the enemies need to begin despawning themselves.
@@ -113,12 +113,10 @@ public class EnemySeekBehaviour : MonoBehaviour
     {
         ExplosionTimer += Time.deltaTime;
 
-        if (ExplosionTimer >= ExplosionCountdown)
+        if (ExplosionTimer >= ExplosionCountdown && _isAlive)
         {
             if (_explosionSFX)
                 SoundManager.Instance.PlaySoundAtPosition(transform.position, _explosionSFX);
-
-          
 
             _explosionInstance = ObjectPoolBehaviour.Instance.GetObject(_explosionParticleSystem, transform.position, transform.rotation);
 
